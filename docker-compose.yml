@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  ubuntu-nginx:
+    image: ubuntu:latest
+    container_name: ubuntu-nginx
+    command: >
+      bash -c "
+        apt-get update &&
+        apt-get install -y nginx &&
+        cp /mnt/nginx.conf /etc/nginx/nginx.conf &&
+        cp /mnt/index.html /var/www/html/index.html &&
+        nginx -g 'daemon off;'
+      "
+    volumes:
+      - ./nginx.conf:/mnt/nginx.conf:ro
+      - ./index.html:/mnt/index.html:ro
+    ports:
+      - "8002:80"
+
